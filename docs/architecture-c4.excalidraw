@@ -1,7 +1,7 @@
 {
   "type": "excalidraw",
   "version": 2,
-  "source": "https://excalidraw.com",
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
   "elements": [
     {
       "type": "rectangle",
@@ -98,8 +98,8 @@
     },
     {
       "type": "text",
-      "version": 42,
-      "versionNonce": 1440506850,
+      "version": 149,
+      "versionNonce": 47475053,
       "isDeleted": false,
       "id": "user_label",
       "fillStyle": "hachure",
@@ -108,9 +108,9 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 174.44522094726562,
-      "y": 280.923095703125,
-      "width": 100,
+      "x": 124.8368922642299,
+      "y": 279.7892368861608,
+      "width": 131.9599260602679,
       "height": 30,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
@@ -123,14 +123,14 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1772812774499,
+      "updated": 1772813616394,
       "link": null,
       "locked": false,
-      "textAlign": "left",
+      "textAlign": "center",
       "verticalAlign": "top",
       "containerId": null,
       "originalText": "User",
-      "autoResize": true,
+      "autoResize": false,
       "lineHeight": 1.5
     },
     {
@@ -577,7 +577,8 @@
       "startBinding": null,
       "endBinding": null,
       "startArrowhead": null,
-      "endArrowhead": "arrow"
+      "endArrowhead": "arrow",
+      "lastCommittedPoint": null
     },
     {
       "type": "text",
@@ -660,10 +661,12 @@
         "fixedPoint": [
           0.005080159505208333,
           0.5498418172200521
-        ]
+        ],
+        "focus": 0
       },
       "startArrowhead": null,
-      "endArrowhead": "arrow"
+      "endArrowhead": "arrow",
+      "lastCommittedPoint": null
     },
     {
       "type": "text",
@@ -816,7 +819,8 @@
       "startBinding": null,
       "endBinding": null,
       "startArrowhead": null,
-      "endArrowhead": "arrow"
+      "endArrowhead": "arrow",
+      "lastCommittedPoint": null
     },
     {
       "type": "arrow",
@@ -858,15 +862,15 @@
       "startBinding": null,
       "endBinding": null,
       "startArrowhead": null,
-      "endArrowhead": "arrow"
+      "endArrowhead": "arrow",
+      "lastCommittedPoint": null
     }
   ],
   "appState": {
     "gridSize": 20,
     "gridStep": 5,
     "gridModeEnabled": false,
-    "viewBackgroundColor": "#ffffff",
-    "lockedMultiSelections": {}
+    "viewBackgroundColor": "#ffffff"
   },
   "files": {}
 }
