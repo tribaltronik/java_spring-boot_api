@@ -6,16 +6,7 @@ This project is a Proof of Concept (PoC) API built using Java and the Spring Boo
 
 The API is structured in layers, making it organized and easy to maintain:
 
-```
-+------------------+       +-------------------+       +--------------------+
-|   Presentation   | ----> |      Service      | ----> |     Data Access    |
-| (API Endpoints)  |       | (Business Logic)  |       | (Database (H2/PostgreSQL)) |
-+------------------+       +-------------------+       +--------------------+
-        ^                           ^                           ^
-        |                           |                           |
-        |      HTTP Requests        |      Data Operations      |
-        +-------------------------------------------------------+
-```
+![sql diagram](./docs/architecture-c4.svg)
 
 *   **Presentation Layer:** This is where the API endpoints are defined. It receives requests (like asking for product information or creating a new product) and sends back responses. It uses JWT (JSON Web Tokens) to ensure only authorized users can access certain parts of the API.
 *   **Service Layer:** This layer contains the core "brain" of the application, handling all the business rules and logic. For example, when you request a product, the Presentation Layer asks the Service Layer to fetch it.
