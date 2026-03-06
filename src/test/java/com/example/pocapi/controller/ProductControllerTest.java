@@ -2,6 +2,8 @@ package com.example.pocapi.controller;
 
 import com.example.pocapi.dto.ProductDto;
 import com.example.pocapi.model.Product;
+import com.example.pocapi.security.JwtTokenProvider;
+import com.example.pocapi.service.CustomUserDetailsService;
 import com.example.pocapi.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -32,6 +38,12 @@ class ProductControllerTest {
     @MockBean
     private ProductService productService;
 
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService;
+
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -43,13 +55,14 @@ class ProductControllerTest {
         Product product2 = new Product("Mouse", "Wireless mouse", BigDecimal.valueOf(25.00));
         product2.setId(2L);
 
-        when(productService.findAll()).thenReturn(Arrays.asList(product1, product2));
+        Page<Product> page = new PageImpl<>(Arrays.asList(product1, product2));
+        when(productService.findAll(any(Pageable.class))).thenReturn(page);
 
-        mockMvc.perform(get("/products")
+        mockMvc.perform(get("/api/v1/products")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Laptop"))
-                .andExpect(jsonPath("$[1].name").value("Mouse"));
+                .andExpect(jsonPath("$.content[0].name").value("Laptop"))
+                .andExpect(jsonPath("$.content[1].name").value("Mouse"));
     }
 
     @Test
@@ -59,7 +72,7 @@ class ProductControllerTest {
         product.setId(1L);
         when(productService.findById(1L)).thenReturn(Optional.of(product));
 
-        mockMvc.perform(get("/products/1")
+        mockMvc.perform(get("/api/v1/products/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Keyboard"));
@@ -70,7 +83,7 @@ class ProductControllerTest {
     void getProductByIdReturnsNotFoundWhenNotFound() throws Exception {
         when(productService.findById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/products/1")
+        mockMvc.perform(get("/api/v1/products/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -84,7 +97,7 @@ class ProductControllerTest {
 
         when(productService.save(any(Product.class))).thenReturn(product);
 
-        mockMvc.perform(post("/products")
+        mockMvc.perform(post("/api/v1/products")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productDto)))
                 .andExpect(status().isOk())
@@ -103,7 +116,7 @@ class ProductControllerTest {
         when(productService.findById(1L)).thenReturn(Optional.of(existingProduct));
         when(productService.save(any(Product.class))).thenReturn(updatedProduct);
 
-        mockMvc.perform(put("/products/1")
+        mockMvc.perform(put("/api/v1/products/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productDto)))
                 .andExpect(status().isOk())
@@ -116,7 +129,7 @@ class ProductControllerTest {
         ProductDto productDto = new ProductDto(1L, "Monitor Updated", "4K Monitor Updated", BigDecimal.valueOf(350.00));
         when(productService.findById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(put("/products/1")
+        mockMvc.perform(put("/api/v1/products/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productDto)))
                 .andExpect(status().isNotFound());
@@ -128,7 +141,7 @@ class ProductControllerTest {
         when(productService.findById(1L)).thenReturn(Optional.of(new Product()));
         doNothing().when(productService).deleteById(1L);
 
-        mockMvc.perform(delete("/products/1")
+        mockMvc.perform(delete("/api/v1/products/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -138,7 +151,7 @@ class ProductControllerTest {
     void deleteProductReturnsNotFoundWhenNotFound() throws Exception {
         when(productService.findById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(delete("/products/1")
+        mockMvc.perform(delete("/api/v1/products/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

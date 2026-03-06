@@ -5,8 +5,16 @@ import java.math.BigDecimal;
 public class ProductDto {
 
     private Long id;
+
+    @javax.validation.constraints.NotBlank(message = "Name is required")
+    @javax.validation.constraints.Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
     private String name;
+
+    @javax.validation.constraints.Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
+
+    @javax.validation.constraints.NotNull(message = "Price is required")
+    @javax.validation.constraints.Positive(message = "Price must be positive")
     private BigDecimal price;
 
     public ProductDto() {
