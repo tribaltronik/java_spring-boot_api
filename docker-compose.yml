@@ -10,6 +10,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       APP_JWTSECRET: SecretKeyToGenJWTs
       APP_JWTEXPIRATIONINMS: 86400000
+      APP_SECURITY_ENABLED: "false"
     depends_on:
       - db
   db:

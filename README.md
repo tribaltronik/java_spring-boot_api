@@ -47,46 +47,31 @@ To run this project:
 
 The application runs on port 8080 and is accessible from your host machine.
 
-1.  **Verify Application Status:**
-    To ensure the Docker containers are running, execute:
+**Note:** Security is disabled for testing (`app.security.enabled=false`). No authentication required.
+
+1.  **Get all products:**
     ```bash
-    docker ps
+    curl -X GET http://localhost:8080/api/v1/products
     ```
-    You should see `java_spring-boot_api-app-1` and `java_spring-boot_api-db-1` listed.
 
-2.  **Authentication and Token Retrieval:**
-    First, you need to obtain a JWT token by authenticating.
+2.  **Create a new product:**
     ```bash
-    TOKEN=$(curl -s -X POST -H "Content-Type: application/json" -d '{ "username": "user", "password": "password" }' http://localhost:8080/auth/login | jq -r .token)
-    echo "JWT Token: $TOKEN"
+    curl -X POST -H "Content-Type: application/json" -d '{ "name": "New Product", "description": "A newly created product", "price": 99.99 }' http://localhost:8080/api/v1/products
     ```
-    *Note: The default username and password are "user" and "password" respectively.*
 
-3.  **Test Product Endpoints (requires JWT Token):**
+3.  **Get product by ID (replace {id} with an actual product ID):**
+    ```bash
+    curl -X GET http://localhost:8080/api/v1/products/{id}
+    ```
 
-    *   **Get all products:**
-        ```bash
-        curl -X GET -H "Authorization: Bearer $TOKEN" http://localhost:8080/products
-        ```
+4.  **Update a product by ID (replace {id} and modify the body):**
+    ```bash
+    curl -X PUT -H "Content-Type: application/json" -d '{ "name": "Updated Product", "description": "This product has been updated", "price": 120.00 }' http://localhost:8080/api/v1/products/{id}
+    ```
 
-    *   **Create a new product:**
-        ```bash
-        curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -d '{ "name": "New Product", "description": "A newly created product", "price": 99.99 }' http://localhost:8080/products
-        ```
-
-    *   **Get product by ID (replace {id} with an actual product ID):**
-        ```bash
-        curl -X GET -H "Authorization: Bearer $TOKEN" http://localhost:8080/products/{id}
-        ```
-
-    *   **Update a product by ID (replace {id} and modify the body):**
-        ```bash
-        curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -d '{ "name": "Updated Product", "description": "This product has been updated", "price": 120.00 }' http://localhost:8080/products/{id}
-        ```
-
-    *   **Delete a product by ID (replace {id}):**
-        ```bash
-        curl -X DELETE -H "Authorization: Bearer $TOKEN" http://localhost:8080/products/{id}
+5.  **Delete a product by ID (replace {id}):**
+    ```bash
+    curl -X DELETE http://localhost:8080/api/v1/products/{id}
         ```
 
 4.  **Testing in a Web Browser:**
