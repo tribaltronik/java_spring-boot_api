@@ -57,3 +57,9 @@ This document outlines the steps to develop the PoC API based on the specificati
 ## 10. Documentation
 
 *   [x] Update the `openapi.yaml` file with the API specification.
+
+## 11. Swagger UI
+
+*   [x] Add Springdoc OpenAPI dependency to `pom.xml`.
+*   [x] Configure Swagger UI endpoint in `application.properties`.
+*   [x] Update SecurityConfig to permit Swagger UI endpoints.
